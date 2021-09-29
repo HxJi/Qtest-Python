@@ -1,0 +1,130 @@
+# -*- coding: utf-8 -*-
+
+################################################################################
+## Form generated from reading UI file 'guifMBfVe.ui'
+##
+## Created by: Qt User Interface Compiler version 5.15.3
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
+
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtWidgets import *
+
+
+class Ui_Qtest(object):
+    def setupUi(self, Qtest):
+        if not Qtest.objectName():
+            Qtest.setObjectName(u"Qtest")
+        Qtest.resize(565, 524)
+        self.display_pattern = QTableWidget(Qtest)
+        self.display_pattern.setObjectName(u"display_pattern")
+        self.display_pattern.setGeometry(QRect(20, 20, 521, 192))
+        self.coo_box = QGroupBox(Qtest)
+        self.coo_box.setObjectName(u"coo_box")
+        self.coo_box.setGeometry(QRect(20, 220, 221, 201))
+        font = QFont()
+        font.setPointSize(14)
+        self.coo_box.setFont(font)
+        self.label_5 = QLabel(self.coo_box)
+        self.label_5.setObjectName(u"label_5")
+        self.label_5.setGeometry(QRect(10, 30, 131, 21))
+        self.gamble_num = QSpinBox(self.coo_box)
+        self.gamble_num.setObjectName(u"gamble_num")
+        self.gamble_num.setGeometry(QRect(150, 30, 61, 21))
+        self.load_coo = QPushButton(self.coo_box)
+        self.load_coo.setObjectName(u"load_coo")
+        self.load_coo.setGeometry(QRect(10, 60, 201, 32))
+        self.add_coo = QPushButton(self.coo_box)
+        self.add_coo.setObjectName(u"add_coo")
+        self.add_coo.setGeometry(QRect(10, 100, 91, 32))
+        self.del_coo = QPushButton(self.coo_box)
+        self.del_coo.setObjectName(u"del_coo")
+        self.del_coo.setGeometry(QRect(120, 100, 91, 32))
+        self.clear_coo = QPushButton(self.coo_box)
+        self.clear_coo.setObjectName(u"clear_coo")
+        self.clear_coo.setGeometry(QRect(10, 130, 91, 32))
+        self.save_coo = QPushButton(self.coo_box)
+        self.save_coo.setObjectName(u"save_coo")
+        self.save_coo.setGeometry(QRect(120, 130, 91, 32))
+        self.display_coo = QPushButton(self.coo_box)
+        self.display_coo.setObjectName(u"display_coo")
+        self.display_coo.setGeometry(QRect(120, 160, 91, 32))
+        self.change_coo = QPushButton(self.coo_box)
+        self.change_coo.setObjectName(u"change_coo")
+        self.change_coo.setGeometry(QRect(10, 160, 91, 32))
+        self.coo_box_2 = QGroupBox(Qtest)
+        self.coo_box_2.setObjectName(u"coo_box_2")
+        self.coo_box_2.setGeometry(QRect(250, 220, 291, 281))
+        self.coo_box_2.setFont(font)
+        self.load_th_excel = QPushButton(self.coo_box_2)
+        self.load_th_excel.setObjectName(u"load_th_excel")
+        self.load_th_excel.setGeometry(QRect(20, 70, 91, 32))
+        self.set_column_name = QPushButton(self.coo_box_2)
+        self.set_column_name.setObjectName(u"set_column_name")
+        self.set_column_name.setGeometry(QRect(20, 210, 101, 32))
+        self.save_th = QPushButton(self.coo_box_2)
+        self.save_th.setObjectName(u"save_th")
+        self.save_th.setGeometry(QRect(20, 240, 101, 32))
+        self.add_col_th = QPushButton(self.coo_box_2)
+        self.add_col_th.setObjectName(u"add_col_th")
+        self.add_col_th.setGeometry(QRect(20, 170, 71, 32))
+        self.del_col_th = QPushButton(self.coo_box_2)
+        self.del_col_th.setObjectName(u"del_col_th")
+        self.del_col_th.setGeometry(QRect(110, 170, 71, 32))
+        self.spreadsheet_name = QPlainTextEdit(self.coo_box_2)
+        self.spreadsheet_name.setObjectName(u"spreadsheet_name")
+        self.spreadsheet_name.setGeometry(QRect(150, 90, 121, 31))
+        self.label_2 = QLabel(self.coo_box_2)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setGeometry(QRect(150, 70, 131, 16))
+        self.load_th_csv = QPushButton(self.coo_box_2)
+        self.load_th_csv.setObjectName(u"load_th_csv")
+        self.load_th_csv.setGeometry(QRect(20, 100, 91, 32))
+        self.read_theory = QPushButton(self.coo_box_2)
+        self.read_theory.setObjectName(u"read_theory")
+        self.read_theory.setGeometry(QRect(20, 130, 251, 32))
+        self.clear_th = QPushButton(self.coo_box_2)
+        self.clear_th.setObjectName(u"clear_th")
+        self.clear_th.setGeometry(QRect(200, 170, 70, 32))
+        self.label_3 = QLabel(self.coo_box_2)
+        self.label_3.setObjectName(u"label_3")
+        self.label_3.setGeometry(QRect(160, 210, 91, 16))
+        self.theory_name = QPlainTextEdit(self.coo_box_2)
+        self.theory_name.setObjectName(u"theory_name")
+        self.theory_name.setGeometry(QRect(150, 230, 121, 31))
+        self.set_vertex = QPushButton(self.coo_box_2)
+        self.set_vertex.setObjectName(u"set_vertex")
+        self.set_vertex.setGeometry(QRect(20, 30, 251, 32))
+
+        self.retranslateUi(Qtest)
+
+        QMetaObject.connectSlotsByName(Qtest)
+    # setupUi
+
+    def retranslateUi(self, Qtest):
+        Qtest.setWindowTitle(QCoreApplication.translate("Qtest", u"Qtest-Py", None))
+        self.coo_box.setTitle(QCoreApplication.translate("Qtest", u"Coordinate", None))
+        self.label_5.setText(QCoreApplication.translate("Qtest", u"Number of Gambles", None))
+        self.load_coo.setText(QCoreApplication.translate("Qtest", u"Load from File", None))
+        self.add_coo.setText(QCoreApplication.translate("Qtest", u"Add", None))
+        self.del_coo.setText(QCoreApplication.translate("Qtest", u"Delete", None))
+        self.clear_coo.setText(QCoreApplication.translate("Qtest", u"Clear", None))
+        self.save_coo.setText(QCoreApplication.translate("Qtest", u"Save", None))
+        self.display_coo.setText(QCoreApplication.translate("Qtest", u"Display", None))
+        self.change_coo.setText(QCoreApplication.translate("Qtest", u"Change", None))
+        self.coo_box_2.setTitle(QCoreApplication.translate("Qtest", u"Patter/Vertex Entry", None))
+        self.load_th_excel.setText(QCoreApplication.translate("Qtest", u"Excel", None))
+        self.set_column_name.setText(QCoreApplication.translate("Qtest", u"Set Col Name", None))
+        self.save_th.setText(QCoreApplication.translate("Qtest", u"Save Theory", None))
+        self.add_col_th.setText(QCoreApplication.translate("Qtest", u"Add", None))
+        self.del_col_th.setText(QCoreApplication.translate("Qtest", u"Delete", None))
+        self.label_2.setText(QCoreApplication.translate("Qtest", u"Spreadsheet Name", None))
+        self.load_th_csv.setText(QCoreApplication.translate("Qtest", u"CSV", None))
+        self.read_theory.setText(QCoreApplication.translate("Qtest", u"Load Theory", None))
+        self.clear_th.setText(QCoreApplication.translate("Qtest", u"Clear", None))
+        self.label_3.setText(QCoreApplication.translate("Qtest", u"Theory Name", None))
+        self.set_vertex.setText(QCoreApplication.translate("Qtest", u"Set Vertex", None))
+    # retranslateUi
+
