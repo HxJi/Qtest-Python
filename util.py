@@ -135,3 +135,33 @@ def read_from_csv(window, path, coordinate_names):
 def read_from_excel(window, path, sheet, coordinate_names):
     input_table = pd.read_excel(path, sheet)
     display_in_window(input_table, window, coordinate_names)
+
+def display_list_in_window(input, window, coordinate_names):
+    clear_window(window)
+    rows, cols = len(input), len(input[0])
+    header = ['Coordinate', 'Value', 'Value']
+    if(rows != len(coordinate_names)):
+        pop_window_text('Warning', 'Number of coordinates cannot match')
+        return
+    
+    window.setColumnCount(cols+1)
+    window.setRowCount(rows+1)
+    # window.setHorizontalHeaderLabels(header)
+
+    for i in range(rows):
+        newItem = QTableWidgetItem(str(coordinate_names[i]))
+        newItem.setTextAlignment(Qt.AlignHCenter|Qt.AlignVCenter)
+        window.setItem(i+1, 0, newItem)
+
+    for j in range(cols+1):
+        newItem = QTableWidgetItem(str(header[j]))
+        newItem.setTextAlignment(Qt.AlignHCenter|Qt.AlignVCenter)
+        window.setItem(0, j, newItem)
+
+    for i in range(rows):
+        for j in range(cols):
+            newItem = QTableWidgetItem(str(input[i][j]))
+            newItem.setTextAlignment(Qt.AlignHCenter|Qt.AlignVCenter)
+            window.setItem(i+1, j+1, newItem)
+    
+    window.resizeColumnsToContents()

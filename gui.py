@@ -22,6 +22,7 @@ from PySide2.QtWidgets import *
 import pathlib
 import xlsxwriter
 from util import *
+from create_vertex import *
 
 # coordinate are used for many times
 coordinate_names = []
@@ -325,5 +326,10 @@ class Ui_Qtest(object):
                     return
     
     def create_vertex(self):
+        window = vertex_window(coordinate_names)
+        x = window.exec_()
+        display_list_in_window(window.result, self.display_pattern, coordinate_names)
         
-        return 0
+        # window.result
+
+
