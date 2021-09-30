@@ -241,7 +241,7 @@ class Ui_Qtest(object):
             self.display_pattern.setRowCount(1)
             self.display_pattern.setColumnCount(1)
         else:
-            self.display_pattern.setRowCount(self.display_pattern.rowCount+1)
+            self.display_pattern.setRowCount(self.display_pattern.rowCount()+1)
         self.refresh_coo_window()
     
     def del_coo_row(self):
