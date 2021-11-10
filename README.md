@@ -8,6 +8,7 @@ Mac OS and Linux: After successful installation of Anaconda, open the terminal, 
 ```
 conda env create --file qtest_env.yml
 ```
+
 The environment configuratioin would take several minutes and after the installation, you can check the environments by run:
 ```
 conda env list
