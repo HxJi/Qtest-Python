@@ -1,7 +1,7 @@
 import collections
 from os import path
 import numpy as np
-from numpy import core
+from numpy import core, double
 import pandas as pd
 import csv
 import os
@@ -139,3 +139,44 @@ def check_col_values(window, lock):
                 return
     return 0
 
+def order_intensity_cal(window, lock):
+    col_count = window.columnCount()
+    row_num = window.rowCount()
+    col_num = window.columnCount()
+    if lock:
+        start = 0
+    else:
+        start = 1
+
+    index_order = []
+    for column in range(col_num):
+        intensity = []
+        for row in range(start, row_num):
+            item = window.item(row, column)
+            value = float(item.text())
+            intensity.append(value)
+        
+        s = np.array(intensity)
+        index_order.append(np.argsort(s))
+
+    return index_order
+
+def generate_p_string(list, name_list):
+    p_order_string = '0<='
+    for i in list:
+        p_order_string = p_order_string + '%s<='%(name_list[i])
+    p_order_string += '1'
+    return p_order_string
+
+
+def getInt(window, title, label):
+    int, okPressed = QInputDialog.getInt(window,title, label)
+    return int
+
+def getDouble(window, title, label):
+    double, okPressed = QInputDialog.getDouble(window,title, label)
+    return double
+
+def getText(window, title, label):
+    text, okPressed = QInputDialog.getText(window,title, label)
+    return text

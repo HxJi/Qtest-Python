@@ -11,9 +11,12 @@
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
+from numpy import left_shift
 
 from utility import *
 from scipy.special import comb
+from vertex_create import *
+
 
 class Ui_main_window(object):
     def setupUi(self, main_window):
@@ -84,16 +87,34 @@ class Ui_main_window(object):
         self.clear_vertex.setGeometry(QRect(560, 50, 71, 31))
         self.th_list = QListWidget(self.centralwidget)
         self.th_list.setObjectName(u"th_list")
-        self.th_list.setGeometry(QRect(380, 120, 161, 192))
+        self.th_list.setGeometry(QRect(380, 120, 331, 192))
         self.vertex_chcek = QPushButton(self.centralwidget)
         self.vertex_chcek.setObjectName(u"vertex_chcek")
-        self.vertex_chcek.setGeometry(QRect(560, 80, 71, 31))
+        self.vertex_chcek.setGeometry(QRect(640, 50, 71, 31))
         self.lock_th = QCheckBox(self.centralwidget)
         self.lock_th.setObjectName(u"lock_th")
-        self.lock_th.setGeometry(QRect(570, 120, 51, 20))
+        self.lock_th.setGeometry(QRect(650, 90, 51, 20))
         self.calculate_ins_order = QPushButton(self.centralwidget)
         self.calculate_ins_order.setObjectName(u"calculate_ins_order")
-        self.calculate_ins_order.setGeometry(QRect(380, 320, 161, 32))
+        self.calculate_ins_order.setGeometry(QRect(380, 320, 331, 32))
+        self.vertex_auto = QPushButton(self.centralwidget)
+        self.vertex_auto.setObjectName(u"vertex_auto")
+        self.vertex_auto.setGeometry(QRect(560, 80, 71, 32))
+        self.append_left_op = QPushButton(self.centralwidget)
+        self.append_left_op.setObjectName(u"append_left_op")
+        self.append_left_op.setGeometry(QRect(380, 380, 111, 32))
+        self.append_right_op = QPushButton(self.centralwidget)
+        self.append_right_op.setObjectName(u"append_right_op")
+        self.append_right_op.setGeometry(QRect(510, 380, 101, 32))
+        self.begin_ineq = QPushButton(self.centralwidget)
+        self.begin_ineq.setObjectName(u"begin_ineq")
+        self.begin_ineq.setGeometry(QRect(380, 350, 71, 32))
+        self.end_ineq = QPushButton(self.centralwidget)
+        self.end_ineq.setObjectName(u"end_ineq")
+        self.end_ineq.setGeometry(QRect(470, 350, 71, 32))
+        self.cal_ineq_matrix = QPushButton(self.centralwidget)
+        self.cal_ineq_matrix.setObjectName(u"cal_ineq_matrix")
+        self.cal_ineq_matrix.setGeometry(QRect(560, 350, 141, 32))
         main_window.setCentralWidget(self.centralwidget)
         self.statusbar = QStatusBar(main_window)
         self.statusbar.setObjectName(u"statusbar")
@@ -127,12 +148,24 @@ class Ui_main_window(object):
         self.vertex_chcek.setText(QCoreApplication.translate("main_window", u"Check", None))
         self.lock_th.setText(QCoreApplication.translate("main_window", u"Lock", None))
         self.calculate_ins_order.setText(QCoreApplication.translate("main_window", u"Calculate Intensity Order", None))
+        self.vertex_auto.setText(QCoreApplication.translate("main_window", u"Auto", None))
+        self.append_left_op.setText(QCoreApplication.translate("main_window", u"Add to Left", None))
+        self.append_right_op.setText(QCoreApplication.translate("main_window", u"Add to Right", None))
+        self.begin_ineq.setText(QCoreApplication.translate("main_window", u"Begin", None))
+        self.end_ineq.setText(QCoreApplication.translate("main_window", u"End", None))
+        self.cal_ineq_matrix.setText(QCoreApplication.translate("main_window", u"Calculate Matrix", None))
     # retranslateUi
+
+
+
 
 
     def button_connect_function(self):
         self.th_mode = 0
         self.theory_count = 0
+        self.A_matrix = []
+        self.B_matrix = []
+        
         self.load_coo.clicked.connect(self.load_coo_file)
         self.add_coo.clicked.connect(self.add_coo_row)
         self.del_coo.clicked.connect(self.del_coo_row)
@@ -154,6 +187,16 @@ class Ui_main_window(object):
 
         self.vertex_chcek.clicked.connect(self.check_vertex_range)
         self.lock_th.clicked.connect(self.move_vertex_name_header)
+
+        self.calculate_ins_order.clicked.connect(self.intensity_order_cal)
+        self.vertex_auto.clicked.connect(self.create_vertex_auto)
+
+        self.append_left_op.clicked.connect(self.append_left_ineq)
+        self.append_right_op.clicked.connect(self.append_right_ineq)
+
+        self.begin_ineq.clicked.connect(self.start_ineq_one)
+        self.end_ineq.clicked.connect(self.end_ineq_one)
+        self.cal_ineq_matrix.clicked.connect(self.final_ieq_matrix)
 
     ### Coordinate Part
     def move_coo_header(self):
@@ -249,7 +292,7 @@ class Ui_main_window(object):
             pop_window_text('Theory', 'Only one method required')
         else:
             if self.th_mode == 0:
-                    self.monitor.setRowCount(self.monitor.rowCount()+1)
+                self.monitor.setRowCount(self.monitor.rowCount()+1)
             if vertex:
                 self.th_mode = 1
                 self.monitor.setVerticalHeaderLabels(['vertex']+self.coo)
@@ -323,4 +366,90 @@ class Ui_main_window(object):
         self.monitor.removeRow(0)
         self.monitor.setHorizontalHeaderLabels(vertex_names)
 
-    def calculate_prob_ins(self):
+    def intensity_order_cal(self):
+        if(self.th_mode != 2):
+            pop_window_text('Warning', 'Wrong Mode')
+            return
+        lock_status = self.lock_th.isChecked()
+        total_order = order_intensity_cal(self.monitor, lock_status)
+
+        self.th_list.clear()
+        for one_col_order in total_order:
+            item = generate_p_string(one_col_order, self.coo)
+            self.th_list.insertItem(self.th_list.count()+1, item)
+        
+    
+    def create_vertex_auto(self):
+        window = vertex_window(self.coo)
+        x = window.exec()
+        # list of 0/1 on the current dimension
+        if(not self.lock_th.isChecked()):
+            values = window.result
+        self.monitor.setColumnCount(self.monitor.columnCount() + 1)
+
+        for i in range(self.monitor.rowCount()):
+            newItem = QTableWidgetItem(str(values[i]))
+            newItem.setTextAlignment(Qt.AlignHCenter|Qt.AlignVCenter)
+            self.monitor.setItem(i+2, -1, newItem)
+    
+    def start_ineq_one(self):
+        self.left_p = []
+        self.left_m = []
+
+        self.right_p = []
+        self.right_m = []
+        self.A_col = np.zeros(len(self.coo))
+        self.B_col = np.zeros(len(self.coo))
+        self.ineq_str = '<='
+
+    def end_ineq_one(self):
+        if(self.left_p == []):
+            self.ineq_str = '0' + self.ineq_str
+        elif(self.right_p == []):
+            self.ineq_str =  self.ineq_str + '0'
+        self.th_list.insertItem(self.th_list.count()+1, self.ineq_str)
+        
+        self.A_matrix.append(self.A_col)
+        self.B_matrix.append(self.B_col)
+        
+
+    def append_left_ineq(self):
+        if(not self.th_mode == 3):
+            pop_window_text('Warning', 'Wrong Mode')
+            return
+        p = getInt(self, 'Get Prob', 'P')
+        m = getDouble(self, 'Get Multiplier', 'Mult')
+        self.left_p.append(p)
+        self.left_m.append(m)
+        if(m > 0):
+            self.ineq_str = '+' + str(m) + 'P_%d'%(p) + self.ineq_str
+        else:
+            self.ineq_str = str(m) + 'P_%d'%(p) + self.ineq_str
+        self.A_col[p] = m
+
+
+    def append_right_ineq(self):
+        if(not self.th_mode == 3):
+            pop_window_text('Warning', 'Wrong Mode')
+            return
+        p = getInt(self, 'Get Prob', 'P')
+        m = getDouble(self, 'Get Multiplier', 'Mult')
+        self.right_p.append(p)
+        self.right_m.append(m)
+        if(m > 0):
+            self.ineq_str = self.ineq_str + '+' + str(m) + 'P_%d'%(p)
+        else:
+            self.ineq_str = self.ineq_str + str(m) + 'P_%d'%(p)
+
+        self.B_col[p] = m
+
+    def final_ieq_matrix(self):
+        print(np.array(self.A_matrix))
+        print(np.array(self.A_matrix).shape)
+        print(np.array(self.B_matrix))
+        print(np.array(self.B_matrix).shape)
+        self.A_matrix = []
+        self.B_matrix = []
+        
+
+
