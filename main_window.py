@@ -302,7 +302,7 @@ class Ui_main_window(object):
                 self.monitor.setRowCount(self.monitor.rowCount()+1)
             if vertex:
                 self.th_mode = 1
-                self.monitor.setVerticalHeaderLabels(['vertex']+self.coo)
+                self.monitor.setVerticalHeaderLabels(['Coordinates']+self.coo)
             elif ins:
                 self.th_mode = 2
                 self.monitor.setVerticalHeaderLabels(['instance']+self.coo)
@@ -457,7 +457,17 @@ class Ui_main_window(object):
         print(np.array(self.B_matrix).shape)
         self.A_matrix = []
         self.B_matrix = []
-        
+    
+    # Add mapping between coordinate name and P_number when last two modes are checked
+
+    # Add constant button to the inequalitity
+    # Allow simplification and  edit on the inequality 
+    # unlock and lock, reset all button
+    # mark the monitor window with theory or data
+    # load inequalities 
+    # support equalities like we support inequalities
+    # dataset, automatic update when people trigger it
+
     # data part: read and write data
 
     def load_data_func(self):
