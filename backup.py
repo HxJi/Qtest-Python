@@ -124,7 +124,6 @@ class Ui_main_window(object):
         self.statusbar.setObjectName(u"statusbar")
         main_window.setStatusBar(self.statusbar)
 
-        self.button_connect_function()
         self.retranslateUi(main_window)
 
         QMetaObject.connectSlotsByName(main_window)
@@ -160,8 +159,6 @@ class Ui_main_window(object):
         self.cal_ineq_matrix.setText(QCoreApplication.translate("main_window", u"Calculate Matrix", None))
         self.load_data.setText(QCoreApplication.translate("main_window", u"Load Data", None))
         self.save_data.setText(QCoreApplication.translate("main_window", u"Save Data", None))
-
-        
     # retranslateUi
 
     def button_connect_function(self):
