@@ -44,9 +44,11 @@ def clear_window(window):
     window.setColumnCount(0)
     window.clearContents()
 
-def write_to_csv(window, path):
+def write_to_csv(window, path, header):
     with open(path, 'w') as stream:
         writer = csv.writer(stream)
+        if header != None:
+            writer.writerow(header)
         for row in range(window.rowCount()):
             rowdata = []
             for column in range(window.columnCount()):
@@ -101,6 +103,7 @@ def display_theory(window, input, coo_num):
     print(header)
     if(rows != coo_num):
         pop_window_text('Warning', 'Number of coordinates cannot match')
+        print(rows, coo_num)
         return
     
     window.setColumnCount(cols)

@@ -228,7 +228,7 @@ class Ui_main_window(object):
         file_name = QFileDialog.getSaveFileName(self, 'Save File', '', 'CSV files(*.csv);;Excel files(*.xlsx , *.xls)')[0]
         file_extension = pathlib.Path(file_name).suffix
         if(file_extension == '.csv'):
-            write_to_csv(self.monitor, file_name)
+            write_to_csv(self.monitor, file_name, None)
         elif(file_extension == '.xls' or file_extension == '.xlsx'):
             write_to_excel(self.monitor, file_name, sheetname = 'coordinate')
 
@@ -298,6 +298,8 @@ class Ui_main_window(object):
         if (vertex and ins) or (vertex and alt) or (ins and alt):
             pop_window_text('Theory', 'Only one method required')
         else:
+            print(self.coo)
+            print(self.th_mode)
             if self.th_mode == 0:
                 self.monitor.setRowCount(self.monitor.rowCount()+1)
             if vertex:
@@ -322,6 +324,7 @@ class Ui_main_window(object):
             self.monitor.setColumnCount(self.monitor.columnCount()+1)
         
     def clear_vertex_node(self):
+        self.th_mode = 0
         self.monitor.setColumnCount(0)
         self.monitor.clearContents()
 
@@ -331,7 +334,7 @@ class Ui_main_window(object):
         file_extension = pathlib.Path(theory_file_name).suffix
 
         if(file_extension == '.csv'):
-            input_table = pd.read_csv(theory_file_name)       
+            input_table = pd.read_csv(theory_file_name, skiprows=1)       
         elif(file_extension == '.xls' or file_extension == '.xlsx'):
             input_table = pd.read_excel(theory_file_name)
 
@@ -345,7 +348,7 @@ class Ui_main_window(object):
         theory_name, ok = QInputDialog.getText(self, 'Enter', 'Theory Name:')
         
         if(file_extension == '.csv'):
-            write_to_csv(self.monitor, file_name)
+            write_to_csv(self.monitor, file_name, theory_name)
         elif(file_extension == '.xls' or file_extension == '.xlsx'):
             write_to_excel(self.monitor, file_name, theory_name)
         
@@ -429,9 +432,9 @@ class Ui_main_window(object):
         self.left_p.append(p)
         self.left_m.append(m)
         if(m > 0):
-            self.ineq_str = '+' + str(m) + 'P_%d'%(p) + self.ineq_str
+            self.ineq_str = '+' + str(m) + 'P_%d:%s'%(p, self.coo[p]) + self.ineq_str
         else:
-            self.ineq_str = str(m) + 'P_%d'%(p) + self.ineq_str
+            self.ineq_str = str(m) + 'P_%d:%s'%(p, self.coo[p]) + self.ineq_str
         self.A_col[p] = m
 
 
@@ -444,16 +447,16 @@ class Ui_main_window(object):
         self.right_p.append(p)
         self.right_m.append(m)
         if(m > 0):
-            self.ineq_str = self.ineq_str + '+' + str(m) + 'P_%d'%(p)
+            self.ineq_str = self.ineq_str + '+' + str(m) + 'P_%d:%s'%(p, self.coo[p])
         else:
-            self.ineq_str = self.ineq_str + str(m) + 'P_%d'%(p)
+            self.ineq_str = self.ineq_str + str(m) + 'P_%d:%s'%(p, self.coo[p])
 
         self.B_col[p] = m
 
     def final_ieq_matrix(self):
-        print(np.array(self.A_matrix))
+        print('A matrix', np.array(self.A_matrix))
         print(np.array(self.A_matrix).shape)
-        print(np.array(self.B_matrix))
+        print('B matrix', np.array(self.B_matrix))
         print(np.array(self.B_matrix).shape)
         self.A_matrix = []
         self.B_matrix = []
@@ -489,6 +492,6 @@ class Ui_main_window(object):
         dataset_name, ok = QInputDialog.getText(self, 'Enter', 'Dataset Name:')
         
         if(file_extension == '.csv'):
-            write_to_csv(self.monitor, file_name)
+            write_to_csv(self.monitor, file_name, None)
         elif(file_extension == '.xls' or file_extension == '.xlsx'):
             write_to_excel(self.monitor, file_name, dataset_name)
