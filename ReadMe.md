@@ -6,7 +6,7 @@ For quick environmental configuration, we recommend installing Anaconda on your 
 
 Mac OS and Linux: After successful installation of Anaconda, open the terminal, navigate to Qtest folder and run:
 ```
-conda env create --file environments.yml
+conda env create --file environment.yml
 ```
 
 The environment configuratioin would take several minutes and after the installation, you can check the environments by run:
